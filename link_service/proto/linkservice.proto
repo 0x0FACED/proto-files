@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package linkservice;
+
+option go_package = "/gen";
+
+service LinkService {
+    rpc SaveLink(SaveLinkRequest) returns (SaveLinkResponse);
+    rpc GetLinks(GetLinksRequest) returns (GetLinksResponse);
+    rpc DeleteLink(DeleteLinkRequest) returns (DeleteLinkResponse);
+}
+
+message SaveLinkRequest {
+    string original_url = 1;
+    string description = 2;
+}
+
+message SaveLinkResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message GetLinksRequest {
+    string description = 1;
+}
+
+message GetLinksResponse {  
+    repeated Link links = 1;
+}
+
+message DeleteLinkRequest {
+    string description = 1;
+}
+
+message DeleteLinkResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message Link {
+    string original_url = 1;
+    string generated_url = 2;
+    string description = 3;
+}
