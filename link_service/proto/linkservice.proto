@@ -11,8 +11,9 @@ service LinkService {
 }
 
 message SaveLinkRequest {
-    string original_url = 1;
-    string description = 2;
+    string username = 1;
+    string original_url = 2;
+    string description = 3;
 }
 
 message SaveLinkResponse {
@@ -21,7 +22,8 @@ message SaveLinkResponse {
 }
 
 message GetLinksRequest {
-    string description = 1;
+    string username = 1;
+    string description = 2;
 }
 
 message GetLinksResponse {  
@@ -29,7 +31,8 @@ message GetLinksResponse {
 }
 
 message DeleteLinkRequest {
-    string description = 1;
+    string username = 1;
+    string description = 2;
 }
 
 message DeleteLinkResponse {
