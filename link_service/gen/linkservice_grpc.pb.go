@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	LinkService_SaveLink_FullMethodName   = "/linkservice.LinkService/SaveLink"
 	LinkService_GetLinks_FullMethodName   = "/linkservice.LinkService/GetLinks"
+	LinkService_GetLink_FullMethodName    = "/linkservice.LinkService/GetLink"
 	LinkService_DeleteLink_FullMethodName = "/linkservice.LinkService/DeleteLink"
 )
 
@@ -30,6 +31,7 @@ const (
 type LinkServiceClient interface {
 	SaveLink(ctx context.Context, in *SaveLinkRequest, opts ...grpc.CallOption) (*SaveLinkResponse, error)
 	GetLinks(ctx context.Context, in *GetLinksRequest, opts ...grpc.CallOption) (*GetLinksResponse, error)
+	GetLink(ctx context.Context, in *GetLinkRequest, opts ...grpc.CallOption) (*GetLinkResponse, error)
 	DeleteLink(ctx context.Context, in *DeleteLinkRequest, opts ...grpc.CallOption) (*DeleteLinkResponse, error)
 }
 
@@ -61,6 +63,16 @@ func (c *linkServiceClient) GetLinks(ctx context.Context, in *GetLinksRequest, o
 	return out, nil
 }
 
+func (c *linkServiceClient) GetLink(ctx context.Context, in *GetLinkRequest, opts ...grpc.CallOption) (*GetLinkResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetLinkResponse)
+	err := c.cc.Invoke(ctx, LinkService_GetLink_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *linkServiceClient) DeleteLink(ctx context.Context, in *DeleteLinkRequest, opts ...grpc.CallOption) (*DeleteLinkResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteLinkResponse)
@@ -77,6 +89,7 @@ func (c *linkServiceClient) DeleteLink(ctx context.Context, in *DeleteLinkReques
 type LinkServiceServer interface {
 	SaveLink(context.Context, *SaveLinkRequest) (*SaveLinkResponse, error)
 	GetLinks(context.Context, *GetLinksRequest) (*GetLinksResponse, error)
+	GetLink(context.Context, *GetLinkRequest) (*GetLinkResponse, error)
 	DeleteLink(context.Context, *DeleteLinkRequest) (*DeleteLinkResponse, error)
 	mustEmbedUnimplementedLinkServiceServer()
 }
@@ -93,6 +106,9 @@ func (UnimplementedLinkServiceServer) SaveLink(context.Context, *SaveLinkRequest
 }
 func (UnimplementedLinkServiceServer) GetLinks(context.Context, *GetLinksRequest) (*GetLinksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLinks not implemented")
+}
+func (UnimplementedLinkServiceServer) GetLink(context.Context, *GetLinkRequest) (*GetLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLink not implemented")
 }
 func (UnimplementedLinkServiceServer) DeleteLink(context.Context, *DeleteLinkRequest) (*DeleteLinkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteLink not implemented")
@@ -154,6 +170,24 @@ func _LinkService_GetLinks_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LinkService_GetLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LinkServiceServer).GetLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LinkService_GetLink_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LinkServiceServer).GetLink(ctx, req.(*GetLinkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LinkService_DeleteLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteLinkRequest)
 	if err := dec(in); err != nil {
@@ -186,6 +220,10 @@ var LinkService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLinks",
 			Handler:    _LinkService_GetLinks_Handler,
+		},
+		{
+			MethodName: "GetLink",
+			Handler:    _LinkService_GetLink_Handler,
 		},
 		{
 			MethodName: "DeleteLink",
