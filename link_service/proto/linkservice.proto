@@ -52,7 +52,8 @@ message DeleteLinkResponse {
 }
 
 message Link {
-    string original_url = 1;
-    string generated_url = 2;
-    string description = 3;
+    int32 link_id = 1;
+    string original_url = 2;
+    string generated_url = 3;
+    string description = 4;
 }
