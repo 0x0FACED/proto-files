@@ -8,6 +8,7 @@ service LinkService {
     rpc SaveLink(SaveLinkRequest) returns (SaveLinkResponse);
     rpc GetLinks(GetLinksRequest) returns (GetLinksResponse);
     rpc GetLink(GetLinkRequest) returns (GetLinkResponse);
+    rpc GetAllLinks(GetAllLinksRequest) returns (GetAllLinksResponse);
     rpc DeleteLink(DeleteLinkRequest) returns (DeleteLinkResponse);
 }
 
@@ -39,6 +40,14 @@ message GetLinkRequest {
 
 message GetLinkResponse {  
     string generated_url = 1;
+}
+
+message GetAllLinksRequest {
+    string username = 1;
+}
+
+message GetAllLinksResponse {  
+    repeated Link links = 1;
 }
 
 message DeleteLinkRequest {
