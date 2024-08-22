@@ -13,7 +13,7 @@ service LinkService {
 }
 
 message SaveLinkRequest {
-    string username = 1;
+    int64 user_id = 1;
     string original_url = 2;
     string description = 3;
 }
@@ -24,7 +24,7 @@ message SaveLinkResponse {
 }
 
 message GetLinksRequest {
-    string username = 1;
+    int64 user_id = 1;
     string description = 2;
 }
 
@@ -34,7 +34,7 @@ message GetLinksResponse {
 
 message GetLinkRequest {
     int32 url_id = 1;
-    string username = 2;
+    int64 user_id = 2;
     string description = 3;
 }
 
@@ -43,7 +43,7 @@ message GetLinkResponse {
 }
 
 message GetAllLinksRequest {
-    string username = 1;
+    int64 user_id = 1;
 }
 
 message GetAllLinksResponse {  
@@ -51,7 +51,7 @@ message GetAllLinksResponse {
 }
 
 message DeleteLinkRequest {
-    string username = 1;
+    int64 user_id = 1;
     string description = 2;
 }
 
