@@ -51,8 +51,7 @@ message GetAllLinksResponse {
 }
 
 message DeleteLinkRequest {
-    int64 user_id = 1;
-    string description = 2;
+    int32 link_id = 1;
 }
 
 message DeleteLinkResponse {
